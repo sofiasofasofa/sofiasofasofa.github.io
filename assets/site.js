@@ -265,3 +265,32 @@ var SITE = {
   window.addEventListener('resize', fit);
   fit();
 })();
+
+/* Tactile pressed states on touch screens, with scroll cancellation. */
+(function () {
+  if (!window.PointerEvent || !window.matchMedia ||
+      !window.matchMedia('(hover: none) and (pointer: coarse)').matches) return;
+  var active = null, startX = 0, startY = 0, pointerId = null;
+  function clear() {
+    if (active) active.classList.remove('is-pressed');
+    active = null;
+    pointerId = null;
+  }
+  document.addEventListener('pointerdown', function (e) {
+    if (e.pointerType !== 'touch' && e.pointerType !== 'pen') return;
+    var target = e.target.closest('.L-m .btn, .L-m a.card, .L-m button[data-dir]');
+    if (!target || !target.getClientRects().length ||
+        target.matches(':disabled, [aria-disabled="true"]')) return;
+    clear();
+    active = target; pointerId = e.pointerId;
+    startX = e.clientX; startY = e.clientY;
+    active.classList.add('is-pressed');
+  }, {passive:true});
+  document.addEventListener('pointermove', function (e) {
+    if (active && e.pointerId === pointerId &&
+        Math.hypot(e.clientX - startX, e.clientY - startY) > 12) clear();
+  }, {passive:true});
+  document.addEventListener('pointerup', clear, {passive:true});
+  document.addEventListener('pointercancel', clear, {passive:true});
+  window.addEventListener('pagehide', clear);
+})();

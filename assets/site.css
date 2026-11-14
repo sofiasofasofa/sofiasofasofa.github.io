@@ -120,3 +120,36 @@ html.is-m .L-m{display:block}
 .L-m .ptab-m .prow>:nth-child(2) *{font-size:inherit!important;line-height:inherit!important;white-space:normal!important}
 .L-m .ptab-m .prow>:nth-child(1) *{white-space:normal!important}
 .nw{white-space:nowrap}
+
+/* Mobile touch feedback: responsive yet restrained pressed states. */
+@media (hover: none) and (pointer: coarse) {
+  .L-m .btn,
+  .L-m a.card,
+  .L-m button[data-dir] {
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    transform-origin: center;
+    transition: transform 175ms cubic-bezier(.2,.75,.25,1), opacity 175ms ease, background-color 180ms ease;
+  }
+  .L-m .btn:active,
+  .L-m .btn.is-pressed,
+  .L-m button[data-dir]:active:not(:disabled),
+  .L-m button[data-dir].is-pressed:not(:disabled) {
+    transform: scale(.965);
+    opacity: .91;
+  }
+  .L-m a.card:active,
+  .L-m a.card.is-pressed {
+    transform: scale(.985);
+    opacity: .965;
+  }
+  /* Prevent sticky hover from lifting a case image on touch devices. */
+  .L-m a.card:hover .im { transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .L-m .btn:active, .L-m .btn.is-pressed,
+  .L-m a.card:active, .L-m a.card.is-pressed,
+  .L-m button[data-dir]:active, .L-m button[data-dir].is-pressed {
+    transform: none !important;
+  }
+}
