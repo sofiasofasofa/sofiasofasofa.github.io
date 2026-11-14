@@ -139,7 +139,7 @@ var SITE = {
     var names = (window.SITE && SITE.aboutPhotos && SITE.aboutPhotos[si]) || [];
     var weaveMap = (window.SITE && SITE.aboutWeave) || {};
     var pool = names.length
-      ? names.map(function (n) { return { url: ((window.PORTFOLIO_ABOUT_PHOTOS || {})[n] || (base + 'img/about/' + n + '.webp')), name: n }; })
+      ? names.map(function (n) { return { url: base + 'img/about/' + n + '.webp', name: n }; })
       : phs.map(function (p) { return { url: getComputedStyle(p).backgroundImage.replace(/^url\(["']?|["']?\)$/g, ''), name: '' }; });
     pool.forEach(function (p) { var i = new Image(); i.onload = function () { p.ratio = i.naturalWidth / i.naturalHeight; }; i.src = p.url; });
 
