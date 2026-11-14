@@ -1,0 +1,122 @@
+@font-face{font-family:'Inter';font-style:normal;font-weight:100 900;font-display:swap;src:url(fonts/inter-cyrillic-opsz-normal.woff2) format('woff2-variations'),url(fonts/inter-cyrillic-opsz-normal.woff2) format('woff2');unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116}
+@font-face{font-family:'Inter';font-style:normal;font-weight:100 900;font-display:swap;src:url(fonts/inter-latin-opsz-normal.woff2) format('woff2-variations'),url(fonts/inter-latin-opsz-normal.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'Golos Text';font-style:normal;font-weight:600;font-display:swap;src:url(fonts/golos-text-cyrillic-600-normal.woff2) format('woff2');unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116}
+@font-face{font-family:'Golos Text';font-style:normal;font-weight:600;font-display:swap;src:url(fonts/golos-text-latin-600-normal.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+:root{--f-sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif;--f-head:'Golos Text','Inter',Arial,sans-serif;--vh:100vh}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+html,body{margin:0;padding:0;background:#fff;color:#000}
+body{font-family:var(--f-sans);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility;font-optical-sizing:none;font-variation-settings:'opsz' 32;overflow-x:hidden}
+img{display:block;max-width:none}
+a{color:inherit}
+p,ul,ol{margin:0}
+.tx p+p,.tx p+.tl,.tx .tl+p{margin-top:var(--psp,0)}
+.tl{padding-left:1.45em}
+.tl li{padding-left:0}
+.tx a{text-decoration:underline;text-underline-offset:2px}
+button{font:inherit;color:inherit}
+.L{margin:0 auto}
+.L-d{width:1600px}
+.L-m{width:375px;display:none}
+html.is-m .L-d{display:none}
+html.is-m .L-m{display:block}
+@media (max-width:1023px){.L-d{display:none}.L-m{display:block}}
+.L>div{margin:0 auto}
+.fullh>div{min-height:var(--vh)}
+.L-d.fullh>div>:last-child{margin-top:auto}
+.L-m>div{padding-bottom:calc(84px + env(safe-area-inset-bottom))}
+.L-m .mnav{position:fixed;left:0;right:0;bottom:0;margin:0 auto;width:375px;z-index:50;padding-bottom:calc(var(--pb,10px) + env(safe-area-inset-bottom))}
+.L-d .navbtns{position:sticky;bottom:40px;z-index:5}
+/* interactions */
+/* кнопки */
+.btn{cursor:pointer;transition:opacity .2s ease,transform .2s ease}
+.btn:active{transform:scale(.97)}
+/* контурные кнопки: hover как у «Submit Website» на awwwards.com — заливка #383838, белый текст, тёмная обводка, 0.3s */
+.btn:not(.btn-ol):not(.btn-dark){transition:background-color .3s ease-out,transform .2s ease}
+.btn-ol{transition:color .3s,background .3s,border .3s,transform .2s ease}
+.btn-ol .tx,.btn-ol .ic{transition:color .3s}
+.btn-ol>i{transition:border-color .3s}
+@media (hover:hover){
+.btn-dark:hover{opacity:.72}
+.btn:not(.btn-ol):not(.btn-dark):hover{background:#e6e6e6}
+.btn-ol:hover{background:#383838}
+.btn-ol:hover>i{border-color:#222222}
+.btn-ol:hover,.btn-ol:hover .tx,.btn-ol:hover .ic{color:#fff}
+}
+}
+.home{cursor:pointer}
+.card .im{transition:transform .5s cubic-bezier(.2,.7,.2,1)}
+.card:hover .im{transform:translateY(-6px)}
+.gal{scrollbar-width:none;-ms-overflow-style:none;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch}
+.gal::-webkit-scrollbar{display:none}
+.L-d .gal{cursor:grab}
+.L-d .gal.drag{cursor:grabbing;user-select:none}
+.L-d .gal.drag *{pointer-events:none}
+.L-m .gal>*{scroll-snap-align:start}
+.gal img{-webkit-user-drag:none;user-select:none}
+/* about slider */
+.slider{position:relative}
+.slider>.slide{grid-area:1/1;visibility:hidden;opacity:0;pointer-events:none}
+.slider>.slide.on{visibility:visible;opacity:1;pointer-events:auto}
+.slider>.slide.out{visibility:visible;animation:sOut .45s ease both}
+.arw{color:#252422;transition:color .2s}
+.arw[disabled]{color:#e2e2e2;cursor:default}
+.arw:not([disabled]):hover{color:#000}
+.slide.on .words>*{animation:wIn .9s cubic-bezier(.16,.84,.24,1) both;animation-delay:calc(var(--i,0)*110ms + 80ms)}
+.slide.on .ph{animation:pIn 1s cubic-bezier(.16,.84,.24,1) both;animation-delay:calc(var(--i,0)*120ms + 260ms)}
+.slide.out .words>*{animation:wOut .4s ease both}
+.ph{transition:scale .4s cubic-bezier(.2,.7,.2,1),translate .4s cubic-bezier(.2,.7,.2,1);will-change:transform}
+.L-d .ph:hover{scale:1.04;z-index:3}
+@keyframes wIn{from{opacity:0;translate:0 60%;filter:blur(8px)}to{opacity:1;translate:0 0;filter:blur(0)}}
+@keyframes wOut{to{opacity:0;translate:0 -30%;filter:blur(6px)}}
+@keyframes pIn{from{opacity:0;translate:0 120px;scale:.8}to{opacity:1;translate:0 0;scale:1}}
+@keyframes sOut{to{opacity:0}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+.words{position:relative;z-index:2}
+.L-m.fullh>div{padding-bottom:calc(12px + env(safe-area-inset-bottom))}
+.L-m.fullh>div::after{content:'';display:block;height:60px;flex:none}
+.L-m .gc>*{scroll-snap-align:center}
+.mcases{display:flex;gap:10px;padding:40px 16px 8px}
+.mc{flex:1 1 0;display:flex;align-items:center;justify-content:center;gap:4px;height:44px;border-radius:999px;border:1px solid #dddddd;font:400 16px/1 var(--f-sans);color:#252422;text-decoration:none;white-space:nowrap}
+.mc-dark{background:#252422;border-color:#252422;color:#fff}
+.gal{position:relative}
+.L-m .gc .gflat>*{scroll-snap-align:center}
+/* карточка проекта (Период / Роль / Продукты) */
+.L-d .ptab{padding:20px;width:auto}
+.L-d .ptab .prow{padding:15px 0;gap:20px}
+.L-d .ptab .prow:first-of-type{padding-top:0}
+.L-d .ptab .prow:last-of-type{padding-bottom:0}
+.L-d .ptab .prow{width:auto;align-self:stretch}
+.L-d .ptab .prow>:nth-child(1){width:140px;flex:none}
+.L-d .ptab .prow>:nth-child(2){width:380px;flex:none;white-space:normal}
+.L-d .ptab .prow>:nth-child(2) *{white-space:normal}
+.L-d .ptab .prow>i{display:none}
+.L-d .ptab .prow+.prow{border-top:.5px solid #e2e2e2}
+/* мобильное меню всегда прибито к низу экрана */
+.L-m .mnav{top:auto!important;bottom:0!important;left:0!important;right:0!important}
+.L-m .card .tx+.tx{letter-spacing:-0.02em}
+/* «Обо мне»: коллаж — фото вплетаются между строками */
+.slide.collage .ph{visibility:hidden;animation:none}
+.slide.collage .words{z-index:auto}
+.slide.collage .words>*{position:relative;z-index:var(--lz,10)}
+.clg{position:absolute;inset:0;pointer-events:none}
+.clg-card{position:absolute;left:0;top:0;transform-origin:50% 50%;backface-visibility:hidden;border-radius:20px;overflow:hidden;background:#ddd center/cover no-repeat;will-change:transform;box-shadow:0 10px 30px rgba(0,0,0,.12)}
+.clg-card.weave{box-shadow:0 22px 50px rgba(0,0,0,.22)}
+
+/* мобильная «Обо мне»: слова ровно по левому краю, как подпись раздела */
+.L-m .words{left:0!important;right:0!important;width:auto!important;top:calc(50% - 90px)!important;align-items:center!important}
+.L-m .words>*{text-align:center!important;align-self:center!important}
+.L-m .clg-card{border-radius:12px}
+/* стрелки «Обо мне»: при наведении линия плавно становится толще (как в референсе: 1px → 2px, 0.2s) */
+.arw svg path{transition:stroke-width .2s}
+@media (hover:hover){.arw:not([disabled]):hover svg path{stroke-width:2.2}}
+/* карточка проекта в кейсах — мобильная версия: мельче шрифт, гармоничные колонки */
+.L-m .ptab-m{padding:16px!important}
+.L-m .ptab-m .prow{gap:28px!important;padding:12px 0!important;align-items:flex-start!important}
+.L-m .ptab-m .prow:first-of-type{padding-top:2px!important}
+.L-m .ptab-m .prow:last-of-type{padding-bottom:2px!important}
+.L-m .ptab-m .prow>:nth-child(1){width:var(--lw,114px)!important;flex:none!important;font-size:9px!important;font-weight:500!important;line-height:1!important;letter-spacing:0!important;white-space:normal!important;overflow-wrap:normal!important;word-break:normal!important;hyphens:none}
+.L-m .ptab-m .prow>:nth-child(2){flex:1 1 0!important;width:auto!important;min-width:0;font-size:12px!important;line-height:1!important;white-space:normal!important}
+.L-m .ptab-m .prow>:nth-child(2) *{font-size:inherit!important;line-height:inherit!important;white-space:normal!important}
+.L-m .ptab-m .prow>:nth-child(1) *{white-space:normal!important}
+.nw{white-space:nowrap}
